@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "bluesky_testing"
+version = "0.1.0"
+description = ""
+authors = ["Letizia Sammut <letizias@ansto.gov.au>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+bluesky = "^1.6.7"
+ophyd = "^1.5.4"
+databroker = "^1.1.0"
+matplotlib = "^3.3.3"
+pyqt5 = "^5.15.2"
+ipython = "^7.19.0"
+pyepics = "^3.4.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
