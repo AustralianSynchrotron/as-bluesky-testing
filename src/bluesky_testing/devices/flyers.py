@@ -53,8 +53,14 @@ class BaseFlyer(ophyd.Device):
         self.kickoff_status = ophyd.DeviceStatus(self)
         self.complete_status = ophyd.DeviceStatus(self)
         self.t0 = time.time()
+        self._data = deque()
 
-        thread = threading.Thread(target=self._fly, daemon=True)
+        def flyer_worker():
+            self._fly()
+            self.complete_status.set_finished()
+            logger.info("_fly() complete. status = " + str(self.complete_status))
+
+        thread = threading.Thread(target=flyer_worker, daemon=True)
         thread.start()
 
         return self.kickoff_status
@@ -94,9 +100,7 @@ class Flyer1(BaseFlyer):
         super().__init__('', **kwargs)
         self.t0 = 0
         self._steps = steps
-        self._data = deque()
 
-    
     def _fly(self):
         """
         flyer activity goes here
@@ -132,26 +136,6 @@ class Flyer1(BaseFlyer):
         # after the wait, we declare victory
         # self.complete_status.set_finished()
         # logger.info("_fly() complete. status = " + str(self.complete_status))
-
-    def kickoff(self):
-        """
-        Start this flyer
-        """
-        logger.info("kickoff()")
-        self.kickoff_status = ophyd.DeviceStatus(self)
-        self.complete_status = ophyd.DeviceStatus(self)
-        self.t0 = time.time()
-        self._data = deque()
-
-        def flyer_worker():
-            self._fly()
-            self.complete_status.set_finished()
-            logger.info("_fly() complete. status = " + str(self.complete_status))
-
-        thread = threading.Thread(target=flyer_worker, daemon=True)
-        thread.start()
-
-        return self.kickoff_status
 
     def collect(self):
         """
