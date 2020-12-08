@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "bluesky_testing"
-version = "0.1.0"
+name = "as-bluesky-testing"
+version = "1.0.0"
 description = ""
 authors = ["Letizia Sammut <letizias@ansto.gov.au>"]
 
