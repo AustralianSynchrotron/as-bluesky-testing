@@ -7,6 +7,7 @@ from ophyd.sim import det, flyer1, flyer2
 
 from bluesky_testing.devices.flyers import BaseFlyer, Flyer1
 
+
 # set up loggers, bluesky and databroker
 # logger = logging.getLogger()
 RE = bluesky.RunEngine({})
@@ -36,11 +37,10 @@ for n in h.stream_names:
 
 
 print("========= Fly Asynchronously =============")
-    
 
 from bluesky.preprocessors import fly_during_wrapper
 
-RE(fly_during_wrapper(count([det], num=5), [flyer0, flyer1]))
+RE(fly_during_wrapper(count([det], num=4), [flyer0, flyer1]))
 
 h = db[-1]
 
@@ -48,8 +48,6 @@ for n in h.stream_names:
     print("=================")
     print(f"data for {n}")
     print(h.table(n))
-
-# print(list(db[-1].documents()))
 
 
 
